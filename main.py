@@ -24,9 +24,43 @@ from db.models import *
 ############################################################################
 """ Replace the code below with your own """
 
-# Seed a few users in the database
-User.objects.create(name='Dan')
-User.objects.create(name='Robert')
+# Create a few products in the database
+Product.objects.update_or_create(upc_code=12345, name='Coffee', price=8.32)
+Product.objects.update_or_create(upc_code=67890, name='Muffin', price=2.50)
+Product.objects.update_or_create(upc_code=54321, name='Sandwich', price=5.75)
+Product.objects.update_or_create(upc_code=98765, name='Juice', price=3.20)
+Product.objects.update_or_create(upc_code=13579, name='Donut', price=1.99)
 
-for u in User.objects.all():
-    print(f'ID: {u.id} \tUsername: {u.name}')
+# Simulate Scanner
+scanning = True
+
+scanned_items = []  # List to hold scanned items
+
+while(scanning):
+
+    user_input = input("Enter UPC code (or 'exit' to quit): ")
+    
+    if user_input.lower() == 'exit':
+        scanning = False
+    else:
+        try:
+            upc = int(user_input)
+            product = Product.objects.get(upc_code=upc)
+            
+            # Add item to scanned list and print subtotal
+            scanned_items.append(product)
+            print(f'Add product to subtotal: {product.name} - Price: ${product.price}')
+            print(f'Current subtotal: ${sum(p.price for p in scanned_items)}\n')
+        except Product.DoesNotExist:
+            print('Product not found. Please try again.')
+        except ValueError:
+            print('Invalid input. Please enter a valid UPC code.')
+
+# Print receipt
+print('\nScanned Items:')
+
+for p in scanned_items:
+    print(f'Item: {p.name} \tPrice: ${p.price}')
+
+total = sum(p.price for p in scanned_items)
+print(f'\nSubtotal: ${total:.2f}')
