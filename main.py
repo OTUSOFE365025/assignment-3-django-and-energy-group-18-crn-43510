@@ -56,6 +56,11 @@ class CashRegisterApp:
         self.items_box = tk.Text(root, width=40, height=10, state='disabled', wrap='none')
         self.items_box.pack(pady=10)
 
+        # UPC input field
+        ttk.Label(root, text="Enter UPC Code:").pack()
+        self.upc_entry = ttk.Entry(root, width=20)
+        self.upc_entry.pack(pady=5)
+
         # Subtotal display at the bottom of window
         self.subtotal_var = tk.StringVar(value="Subtotal: $0.00")
         ttk.Label(root, textvariable=self.subtotal_var, font=("Arial", 12, "bold")).pack(pady=10)
@@ -65,21 +70,43 @@ class CashRegisterApp:
 
     def scan_item(self):
 
-        # Randomly select product
-        product = random.choice(self.products)
-        self.scanned_items.append(product)
+        upc_code = self.upc_entry.get().strip()
 
-        # Update subtotal
-        subtotal = sum(p.price for p in self.scanned_items)
+        try:
+            # Try to get product from DB
+            product = Product.objects.get(upc_code=upc_code)
+            self.scanned_items.append(product)
 
-        # Update text box with scanned product
-        self.items_box.config(state='normal')
-        self.items_box.insert('end', f"{product.name}\t${product.price:.2f}\n")
-        self.items_box.config(state='disabled')
+            # Update subtotal
+            subtotal = sum(p.price for p in self.scanned_items)
 
-        # Update subtotal label
-        self.subtotal_var.set(f"Subtotal: ${subtotal:.2f}")
+            # Update scanned list
+            self.items_box.config(state='normal')
+            self.items_box.insert('end', f"{product.name}\t${product.price:.2f}\n")
+            self.items_box.config(state='disabled')
 
+            # Update subtotal label
+            self.subtotal_var.set(f"Subtotal: ${subtotal:.2f}")
+
+            # Clear entry box
+            self.upc_entry.delete(0, 'end')
+
+        except Product.DoesNotExist:
+            # If UPC not found in DB
+            self.items_box.config(state='normal')
+            self.items_box.insert('end', f"UPC {upc_code} not found.\n")
+            self.items_box.config(state='disabled')
+            self.upc_entry.delete(0, 'end')
+
+        except ValueError:
+            # If the UPC is not a number
+            self.items_box.config(state='normal')
+            self.items_box.insert('end', f"Invalid UPC: '{upc_code}' (must be numeric)\n")
+            self.items_box.config(state='disabled')
+
+        finally:
+            # Always clear entry box after scanning
+            self.upc_entry.delete(0, 'end')
 
 if __name__ == "__main__":
     root = tk.Tk()

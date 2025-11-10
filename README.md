@@ -10,11 +10,11 @@ This project implements a cash register application using Django's Object Relati
 
 ## Demonstration
 
-Use the scan button to randomly scan products based on upc code. Ongoing subtotal is shown at the bottom of the window.
+Use the scan button to randomly scan products based on upc code. Ongoing subtotal is shown at the bottom of the window. Close window once finished.
 
 **Cash Register Application Window:**
 
-![alt text](image-1.png)
+![alt text](image.png)
 
 ## Setup Instructions
 
