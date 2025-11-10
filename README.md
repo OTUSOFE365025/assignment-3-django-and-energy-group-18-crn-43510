@@ -2,6 +2,20 @@
 
 This project implements a cash register application using Django's Object Relational Management (ORM) framework.
 
+## Usage
+
+- **Product Database**: Define product models in `db/models.py` with UPC code, name, and price
+- **Scanning**: Running `main.py` uses tkinter for gui and allows you to scan products. Generate ongoing subtotal as you keep scanning products.
+- **Database Queries**: Uses Django ORM queries in `main.py` to populate and retrieve product data
+
+## Demonstration
+
+Use the scan button to randomly scan products based on upc code. Ongoing subtotal is shown at the bottom of the window.
+
+**Cash Register Application Window:**
+
+![alt text](image-1.png)
+
 ## Setup Instructions
 
 ### Prerequisites
@@ -45,12 +59,6 @@ This project implements a cash register application using Django's Object Relati
 ├── settings.py            # Database configuration
 └── README.md
 ```
-
-## Usage
-
-- **Product Database**: Define product models in `db/models.py` with UPC code, name, and price
-- **Scanning**: After running `main.py` enter a UPC code in the terminal to retrieve and display the product information and generate subtotal
-- **Database Queries**: Uses Django ORM queries in `main.py` to populate and retrieve product data
 
 ## License
 
