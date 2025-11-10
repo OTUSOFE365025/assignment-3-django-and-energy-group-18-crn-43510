@@ -1,14 +1,6 @@
-# Cash Register Application - Django ORM
+# Cash Register Application: Django ORM
 
-## Assignment Overview
-
-This project implements a cash register application using Django's Object Relational Management (ORM) framework. The application demonstrates Django's database functionality in a standalone Python application (without a web server).
-
-## Features
-
-- **Database Initialization**: Populate the database with product information (UPC codes, names, and prices)
-- **Product Scanning**: Search for products by UPC code and display product details (name and price). Generate summary and subtotal of scanned items.
-- **Django ORM**: Uses Django ORM for database operations with SQLite backend
+This project implements a cash register application using Django's Object Relational Management (ORM) framework.
 
 ## Setup Instructions
 
@@ -27,7 +19,7 @@ This project implements a cash register application using Django's Object Relati
 2. **Create a virtual environment and install dependencies**
    ```bash
    python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   source venv/bin/activate  # On Windows: .\venv\Scripts\activate
    pip install django
    ``` 
 
@@ -57,7 +49,7 @@ This project implements a cash register application using Django's Object Relati
 ## Usage
 
 - **Product Database**: Define product models in `db/models.py` with UPC code, name, and price
-- **Scanning**: Enter a UPC code in the terminal to retrieve and display the product information and generate subtotal
+- **Scanning**: After running `main.py` enter a UPC code in the terminal to retrieve and display the product information and generate subtotal
 - **Database Queries**: Uses Django ORM queries in `main.py` to populate and retrieve product data
 
 ## License
